@@ -20,8 +20,14 @@ window.onload = function() {;
     // anders zet de stop knop weer terug op normaal
     const btn = document.getElementById('btn');
     btn.addEventListener('click', function handleClick() {
-        if (btn.textContent == "Open") btn.textContent = "Close" & pywebview.api.passThrough("opened") ;
-        else btn.textContent = "Open" & pywebview.api.passThrough("closed")
+        if (btn.textContent == "Open") {
+            btn.textContent = "Close"  ;
+            pywebview.api.passThrough("opened") ;
+        }
+        else {
+            btn.textContent = "Open" ;
+            pywebview.api.passThrough("closed");
+        }
     });
     
     // if (status.textContent == "Status: Closed") status.textContent = "Status: Opened" ;
@@ -36,10 +42,10 @@ window.onload = function() {;
             data = JSON.parse(data);
             const status = document.getElementById('status');
             if (data["gateStatus"] == "closed") {
-                status.textContent = "Status: Opened" ;
+                status.textContent = "Status: Closed" ;
             }
             if (data["gateStatus"] == "opened") {
-                status.textContent = "Status: Closed" ;
+                status.textContent = "Status: Opened" ;
             }
             
         });

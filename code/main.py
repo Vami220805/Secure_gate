@@ -19,7 +19,6 @@ except Exception as e:
     print(e, " erroor")
 
 def changeGate():
-    global gateClosed
     active = True
     toggle_interval = 0.2  # Interval in seconds
     while active:
@@ -35,10 +34,8 @@ def changeGate():
 
 while True: 
     if gateSensor.is_pressed:
-        gateClosed = True
         gate = "closed"
     else:
-        gateClosed = False
         gate = "opened"
     data = queue.get()
     if (data != gate & len(data != 0)):

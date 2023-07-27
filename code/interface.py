@@ -26,6 +26,5 @@ def startWebInterface(queue):
         
         def passThrough(self, gate):
             queue.put(gate)
-            requests.post(url = URL, params = {"type": "start"})
 
     api = Api()
