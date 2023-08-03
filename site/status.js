@@ -18,17 +18,7 @@ window.onload = function() {;
     // als er 1x op stop wordt geklikt, vraag voor en confirmatie
     // als er nog eens wordt gedrukt, voer de stop functie van de api uit een ga terug naar het begin scherm
     // anders zet de stop knop weer terug op normaal
-    const btn = document.getElementById('btn');
-    btn.addEventListener('click', function handleClick() {
-        if (btn.textContent == "Open") {
-            btn.textContent = "Close"  ;
-            pywebview.api.passThrough("opened") ;
-        }
-        else {
-            btn.textContent = "Open" ;
-            pywebview.api.passThrough("closed");
-        }
-    });
+
     
     // if (status.textContent == "Status: Closed") status.textContent = "Status: Opened" ;
     //     else status.textContent = "Status: Closed"
@@ -40,20 +30,62 @@ window.onload = function() {;
     function updateGame() {
         $.get( "https://michael2222.pythonanywhere.com/status", function( data ) {
             data = JSON.parse(data);
+            gate = data["gateStatus"]
             const status = document.getElementById('status');
-            if (data["gateStatus"] == "closed") {
+            if (gate == "closed") {
                 status.textContent = "Status: Closed" ;
             }
-            if (data["gateStatus"] == "opened") {
+            if (gate == "opened") {
                 status.textContent = "Status: Opened" ;
             }
             
         });
     }
+    
 
     // voer de update functie uit, en herhaal dit elker 100 milliseconde
     updateGame()
     setInterval(function() {
         updateGame();
     }, 100);
-} 
+
+    const btn = document.getElementById('btn');
+    var wachttijd = 0
+    btn.addEventListener('click', function handleClick() {
+        if (btn.textContent == "Open") {
+            btn.textContent = "Opening..."  ;
+            // pywebview.api.passThrough("opened") ;
+            function pollDOM () {
+                if (gate == "opened") {
+                    btn.textContent = "Close"
+                } else if (wachttijd > 40000){
+                    window.alert("Er is iets foutgegaan, probeer opnieuw.")
+                    btn.textContent = "Open"
+                    wachttijd = 0
+                } else {
+                    wachttijd = wachttijd + 100
+                    window.setTimeout(pollDOM, 100); // try again in 1000 milliseconds
+                }
+            }
+            pollDOM();
+        }
+        else if  (btn.textContent == "Close") {
+            btn.textContent = "Closing..." ;
+            // pywebview.api.passThrough("closed");
+            function pollDOM () {
+                if (gate == "closed") {
+                    btn.textContent = "Open"
+                } else if (wachttijd > 40000){
+                    window.alert("Er is iets foutgegaan, probeer opnieuw.")
+                    btn.textContent = "Close"
+                    wachttijd = 0
+                } else {
+                    wachttijd = wachttijd + 100
+                    window.setTimeout(pollDOM, 100); // try again in 1000 milliseconds
+                }
+            }
+            pollDOM();
+        }
+    });
+}
+
