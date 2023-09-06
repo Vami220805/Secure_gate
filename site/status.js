@@ -54,10 +54,10 @@ window.onload = function() {;
     btn.addEventListener('click', function handleClick() {
         if (btn.textContent == "Open") {
             btn.textContent = "Opening..."  ;
-            // pywebview.api.passThrough("opened") ;
             function pollDOM () {
                 if (gate == "opened") {
                     btn.textContent = "Close"
+                    pywebview.api.passThrough("opened") ;
                 } else if (wachttijd > 40000){
                     window.alert("Er is iets foutgegaan, probeer opnieuw.")
                     btn.textContent = "Open"
@@ -71,10 +71,10 @@ window.onload = function() {;
         }
         else if  (btn.textContent == "Close") {
             btn.textContent = "Closing..." ;
-            // pywebview.api.passThrough("closed");
             function pollDOM () {
                 if (gate == "closed") {
                     btn.textContent = "Open"
+                    pywebview.api.passThrough("closed");
                 } else if (wachttijd > 40000){
                     window.alert("Er is iets foutgegaan, probeer opnieuw.")
                     btn.textContent = "Close"
