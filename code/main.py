@@ -6,11 +6,15 @@ import requests
 import datetime
 from interface import startWebInterface
 from queue import Queue
+import subprocess
 
 gateSensor = Button(22, pull_up = 0)
 URL = "https://michael2222.pythonanywhere.com/status"
 active = True
 gate = "closed"
+
+# Run the other script
+subprocess.run(["python", "C:\scripts\other.py"])
 
 try:
     queue = Queue()

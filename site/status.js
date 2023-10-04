@@ -1,26 +1,5 @@
 window.onload = function() {;
 
-    // haal de huidige tijd op en start een timer interval die elke seconde de timer waarde update
-    // var gameTime
-    // var startTime = Date.now()
-    // var delta = Date.now() - startTime; 
-    // var seconds = Math.floor(delta / 1000)
-    // gameTime = new Date(seconds * 1000).toISOString().substring(14, 19)
-    // setInterval(function timerFunction() {
-    //     var delta = Date.now() - startTime; 
-    //     var seconds = Math.floor(delta / 1000)
-    //     gameTime = new Date(seconds * 1000).toISOString().substring(14, 19)
-    //     $(".timer").text(gameTime)
-    // }, 1000);
- 
-    // als er 1x op stop wordt geklikt, vraag voor en confirmatie
-    // als er nog eens wordt gedrukt, voer de stop functie van de api uit een ga terug naar het begin scherm
-    // anders zet de stop knop weer terug op normaal
-
-    
-    // if (status.textContent == "Status: Closed") status.textContent = "Status: Opened" ;
-    //     else status.textContent = "Status: Closed"
-
     // functie die telkens opnieuw wordt uigevoerd
     // haal data van de server af (/game) en update aantal speelstukken en wie aan de beurt is
     // als de game niet actief is en er is een winner,
@@ -47,7 +26,17 @@ window.onload = function() {;
         updateGame();
     }, 100);
 
-    const btn = document.getElementById('btn');
+    $.get( "https://michael2222.pythonanywhere.com/status", function( data ) {
+        data = JSON.parse(data);
+        gate = data["gateStatus"]
+        const btn = document.getElementById('btn');
+        if (gate == "opened") {
+            btn.textContent = "Close";
+        } else {
+            btn.textContent = "Open";
+        }
+    });
+
     var wachttijd = 0
     btn.addEventListener('click', function handleClick() {
         if (btn.textContent == "Open") {
@@ -85,5 +74,12 @@ window.onload = function() {;
             pollDOM();
         }
     });
-}
+    const live = document.getElementById('live');
+    live.addEventListener('click', function handleClick() {
+        window.alert("Open live feed");
 
+    });
+
+
+
+}
