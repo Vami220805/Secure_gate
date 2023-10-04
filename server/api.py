@@ -10,6 +10,7 @@ import os
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 GAMES_FILE_PATH = os.path.join(BASE, "gateStatus.json")
+HISTORY_FILE_PATH = os.path.join(BASE, "history.json")
 
 # maak een flas app aan, en verander de instellingen
 app = Flask(__name__)
@@ -39,6 +40,22 @@ def games():
 
     if request.method == 'GET':
         return open(GAMES_FILE_PATH).read()
+    
+
+@app.route('/history', methods=['GET','POST'])
+@cross_origin()
+def history():
+    if request.method == 'POST':
+        json_data = request.get_json()
+        with open(HISTORY_FILE_PATH,'r') as file:
+            file_data = json.load(file)
+            file_data.append(json_data)
+        with open(HISTORY_FILE_PATH,'w') as file:
+            json.dump(file_data, file, indent = 4)
+        return ""
+
+    if request.method == 'GET':
+        return open(HISTORY_FILE_PATH).read()
 
 # als de file direct wordt uitgevoerd dan start de flask app
 if __name__ == '__main__':

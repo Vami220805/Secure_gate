@@ -1,5 +1,3 @@
-// als de pagina is geladen, haal np1, np2, cp1 en cp2 uit de url
-// zet de namen in de juiste elementen en voeg de juiste class toe aan de hand van de kleur
 window.onload = function() {;
 
     // haal de huidige tijd op en start een timer interval die elke seconde de timer waarde update
