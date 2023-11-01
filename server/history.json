@@ -3,5 +3,10 @@
         "oldStatus": "opened",
         "newStatus": "closed",
         "currentTime": "0"
+    },
+    {
+        "oldStatus": "opened",
+        "newStatus": "closed",
+        "currentTime": "0"
     }
 ]
