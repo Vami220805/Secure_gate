@@ -7,9 +7,12 @@ import datetime
 from interface import startWebInterface
 from queue import Queue
 import subprocess
+from time import sleep
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 gateSensor = Button(22, pull_up = 0)
-URL = "https://michael2222.pythonanywhere.com/status"
 active = True
 gate = "closed"
 
@@ -48,7 +51,13 @@ while True:
             winData = dict()
             winData["gateStatus"]= gate
             winData["lastTimeChanged"]= str(datetime.datetime.now())[2:]
+            historyData = dict()
+            historyData["oldStatus"]= "old"
+            historyData["newStatus"]= gate
+            historyData["lastTimeChanged"]= str(datetime.datetime.now())[2:]
             requests.post(url = "https://michael2222.pythonanywhere.com/status" , json = winData)
+            requests.post(url = "https://michael2222.pythonanywhere.com/history" , json = winData)
+
     else: 
         queue.put(data)
     

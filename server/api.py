@@ -11,6 +11,8 @@ import os
 BASE = os.path.dirname(os.path.abspath(__file__))
 GAMES_FILE_PATH = os.path.join(BASE, "gateStatus.json")
 HISTORY_FILE_PATH = os.path.join(BASE, "history.json")
+MAX_HISTORY_LENGTH = 100  # Set the maximum history length as needed
+
 
 # maak een flas app aan, en verander de instellingen
 app = Flask(__name__)
@@ -47,12 +49,17 @@ def games():
 def history():
     if request.method == 'POST':
         json_data = request.get_json()
-        with open(HISTORY_FILE_PATH,'r') as file:
+        # Append the new data to the existing data
+        with open(HISTORY_FILE_PATH, 'r') as file:
             file_data = json.load(file)
             file_data.append(json_data)
-        with open(HISTORY_FILE_PATH,'w') as file:
-            json.dump(file_data, file, indent = 4)
+
+        if len(file_data) > MAX_HISTORY_LENGTH:
+            # If history exceeds the maximum length, overwrite the file
+            with open(HISTORY_FILE_PATH, 'w') as file:
+                json.dump(file_data, file, indent=4)
         return ""
+
 
     if request.method == 'GET':
         return open(HISTORY_FILE_PATH).read()

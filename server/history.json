@@ -1,6 +1,7 @@
 [
     {
-        "changed": "opened",
-        "timeChanged": "0"
+        "oldStatus": "opened",
+        "newStatus": "closed",
+        "currentTime": "0"
     }
 ]

@@ -10,7 +10,7 @@
     bottom: 0;
     top: 0;
     z-index: 100;
-    padding: 70px 0 0 10px;
+    padding: 30px 0 0 10px;
     border-right: 1px solid #d3d3d3;
   }
   
@@ -37,4 +37,11 @@
 
   .status {
     font-weight: bold;
+  }
+
+  .logo {
+    height: 5rem;
+    margin-left: 2rem;
+    margin-bottom: 20px;
+    border-radius: 8px;
   }
