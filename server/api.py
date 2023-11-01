@@ -26,15 +26,21 @@ def main():
 def games():
     if request.method == 'POST':
         json_data = request.get_json()
-        with open(GAMES_FILE_PATH, 'r') as file:
-            file_data = json.load(file)
+        try:
+            with open(GAMES_FILE_PATH, 'r') as file:
+                file_data = json.load(file)
             file_data.append(json_data)
-        with open(GAMES_FILE_PATH, 'w') as file:
-            json.dump(file_data, file, indent=4)
-        return ""
+            with open(GAMES_FILE_PATH, 'w') as file:
+                json.dump(file_data, file, indent=4)
+            return ""
+        except Exception as e:
+            print(f"Error writing to the JSON file: {str(e)}")
+
+
 
     if request.method == 'GET':
         return open(GAMES_FILE_PATH).read()
+
 
 # Create the route "/history"
 @app.route('/history', methods=['GET', 'POST'])
